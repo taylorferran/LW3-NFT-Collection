@@ -5,9 +5,7 @@
   import "@openzeppelin/contracts/access/Ownable.sol";
   import "./IWhitelist.sol";
 
-	contract CryptoDevs is ERC721Enumerable, Ownable() {
-
-
+contract CryptoDevs is ERC721Enumerable, Ownable {
 	/**
 	* @dev _baseTokenURI for computing {tokenURI}. If set, the resulting URI for each
 	* token will be the concatenation of the `baseURI` and the `tokenId`.
@@ -15,8 +13,7 @@
 	string _baseTokenURI;
 
 	//  _price is the price of one Crypto Dev NFT
-	uint256 public _price = 0.001 ether;
-
+	uint256 public _price = 0.01 ether;
 
 	// _paused is used to pause the contract in case of an emergency
 	bool public _paused;
@@ -53,14 +50,14 @@
 	}
 
 	/**
-    * @dev startPresale starts a presale for the whitelisted addresses
-    */
+	* @dev startPresale starts a presale for the whitelisted addresses
+	*/
 	function startPresale() public onlyOwner {
 		presaleStarted = true;
 		// Set presaleEnded time as current timestamp + 5 minutes
 		// Solidity has cool syntax for timestamps (seconds, minutes, hours, days, years)
 		presaleEnded = block.timestamp + 5 minutes;
-    }
+	}
 
 	/**
 	* @dev presaleMint allows a user to mint one NFT per transaction during the presale.
@@ -113,11 +110,10 @@
 		(bool sent, ) =  _owner.call{value: amount}("");
 		require(sent, "Failed to send Ether");
 	}
-	
+
 	// Function to receive Ether. msg.data must be empty
 	receive() external payable {}
 
 	// Fallback function is called when msg.data is not empty
 	fallback() external payable {}
-
 }
